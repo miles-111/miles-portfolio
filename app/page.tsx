@@ -34,7 +34,6 @@ export default function Home() {
               key={i} 
               className={item.className}
               onClick={() => {
-                // Open modal for info cards, let Contact Me handle its own link
                 if (item.name !== "Contact Me") setSelectedCard(item);
               }}
             >
@@ -43,8 +42,11 @@ export default function Home() {
                 description={item.description}
                 background={item.background}
                 Icon={item.Icon}
-                href={item.name === "Contact Me" ? item.href : undefined}
+                // Fix 1: Ensure href is always a string
+                href={item.name === "Contact Me" ? (item.href ?? "#") : "#"}
                 cta={item.cta}
+                // Fix 2: Provide the required className prop
+                className="h-full" 
               />
             </div>
           ))}
@@ -78,7 +80,7 @@ export default function Home() {
               
               <div className="flex flex-col items-center">
                 <div className="mb-4 rounded-2xl bg-white/5 p-4 text-white">
-                  <selectedCard.Icon size={40} />
+                  {selectedCard.Icon && <selectedCard.Icon size={40} />}
                 </div>
                 <h2 className="mb-4 text-3xl font-bold text-white">{selectedCard.name}</h2>
                 <p className="text-lg leading-relaxed text-slate-300 whitespace-pre-wrap">
